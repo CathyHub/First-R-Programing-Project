@@ -1,0 +1,66 @@
+---
+title: "Time series data in R"
+author: "Cathy"
+date: '2022-03-28'
+output: html_document
+---
+#Install packages
+```{r}
+install.packages("lubridate")
+install.packages("tidyverse")
+```
+
+#Load packages
+```{r}
+library(lubridate)
+library(tidyverse)
+```
+
+
+```{r}
+#Load Data from csv
+#list.files(path="Data", recursive = TRUE)
+harMet_15Min <- read.csv("Data/NEON-DS-Met-Time-Series/HARV/FisherTower-Met/hf001-10-15min-m.csv")
+```
+
+
+
+```{r}
+str(harMet_15Min$datetime)
+```
+
+```{r}
+# convert to POSIX date time class - US Eastern Time Zone
+harMet_15Min$datetime <- as.POSIXct(harMet_15Min$datetime,
+                          format = "%Y-%m-%dT%H:%M",
+                           tz = "America/New_York")
+```
+
+get time peried from 1 Jan 2009 to 31 Dec 2011
+```{r}
+harMet15.09.11 <- subset(harMet_15Min,
+                         datetime >= as.POSIXct('2009-01-01 00:00',tz = "America/New_York") &
+                         datetime <= as.POSIXct('2011-12-31 23:59',tz="America/New_York"))
+```
+
+```{r}
+head(harMet15.09.11$datetime)
+tail(harMet15.09.11$datetime)
+```
+
+Write subset date to .csv file
+```{r}
+write.csv(harMet15.09.11, "./Output/Met_HARV_15min_2009_2011.csv")
+```
+
+Check for NA Values
+```{r}
+sum(is.na(harMet15.09.11$datetime))
+```
+# view rows where the air temperature is NA 
+```{r}
+colSums(is.na(harMet15.09.11))
+harMet15.09.11[is.na(harMet15.09.11$airt), ] #shwoing all columns.
+```
+
+

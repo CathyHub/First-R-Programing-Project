@@ -2,8 +2,8 @@
     "sortOrder": [
         {
             "columnIndex": 2,
-            "ascending": false
+            "ascending": true
         }
     ],
-    "path": "~/Projects"
+    "path": "~/Projects/First R Programing Project/Scripts"
 }

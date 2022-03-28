@@ -1,0 +1,39 @@
+
+
+
+
+```{r}
+data <- data.frame(x1 = c(9, 6, NA, 9, 2, 5, NA), 
+                   x2 = c(NA, 5, 2, 1, 5, 8, 0),    
+                   x3 = c(1, 3, 5, 7, 9, 7, 5))       
+```
+
+### Oberserve NA values for data frame. 
+In order to deal with missing data, it is crucial to find missing values and to identify observations in your data without any missings.
+
+```{r}
+is.na(data)
+
+colSums(is.na(data))
+```
+
+### Remove all rows which have na value `na.omit()`
+```{r}
+remove_na <- na.omit(data)
+# same out put as 
+remove_na_02 = data[complete.cases(data), ]
+```
+
+### omit rows with NA values by column `compelete.cases(df$col)` `!is.na(df$col)`
+```{r}
+data_is.na <- data[!is.na(data$x1), ]
+data_is.na_02 <- data[complete.cases(data$x1), ]
+data_is.na
+data_is.na_02
+```
+
+### Remove missing values when analysing data `na.rm = TRUE`
+```{r}
+mean(data$x2, na.rm=TRUE)
+```
+
